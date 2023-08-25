@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import CourseCard from "./Coursecard";
 import CreateEditCourse from "./CreateEditCourse";
 
+//todo: update course changes
+//todo: delete course changes
+
 function Courses() {
   const [course, setCourse] = useState([]);
   const [create, setCreate] = useState(false);
@@ -24,7 +27,7 @@ function Courses() {
     getCourses();
   }, []);
 
-  const updateCourse = async (course) => {
+  const createCourse = async (course) => {
     const token = JSON.parse(localStorage.getItem("usertoken"));
     try {
       const updateRequest = await fetch("http://localhost:3000/admin/courses", {
@@ -68,7 +71,11 @@ function Courses() {
         <Grid container spacing={2} justifyContent="flex-start">
           {course.map((item) => (
             <Grid item xs={12} md={4} lg={3} key={item._id}>
-              <CourseCard course={item} />
+              <CourseCard
+                course={item}
+                setCreate={setCreate}
+                getCourses={() => getCourses()}
+              />
             </Grid>
           ))}
         </Grid>
@@ -76,7 +83,8 @@ function Courses() {
       <CreateEditCourse
         create={create}
         setCreate={setCreate}
-        updateCourse={(e) => updateCourse(e)}
+        type={"Create"}
+        createCourse={(e) => createCourse(e)}
       />
     </div>
   );

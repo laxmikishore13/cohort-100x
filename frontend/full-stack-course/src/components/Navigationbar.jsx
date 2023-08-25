@@ -2,16 +2,12 @@ import { AppBar, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-//todo: 1) signup and sign up and logout buttons should render conditionally.
-//todo: 2) show user info beside logout after user signed in.
-
 function Navigationbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const Navigate = useNavigate();
 
   useEffect(() => {
     const userToken = localStorage.getItem("usertoken");
-    console.log(userToken, "appbar");
     if (userToken) {
       setIsLoggedIn(true);
     }

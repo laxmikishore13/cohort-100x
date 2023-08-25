@@ -12,11 +12,21 @@ import {
 import { useState } from "react";
 
 const CreateEditCourse = (props) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [image, setImage] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [title, setTitle] = useState(
+    props?.item?.course?.title ? props?.item?.course?.title : ""
+  );
+  const [description, setDescription] = useState(
+    props?.item?.course?.description ? props?.item?.course?.description : ""
+  );
+  const [price, setPrice] = useState(
+    props?.item?.course?.price ? props?.item?.course?.price : 0
+  );
+  const [image, setImage] = useState(
+    props?.item?.course?.imageLink ? props?.item?.course?.imageLink : ""
+  );
+  const [checked, setChecked] = useState(
+    props?.item?.course?.published ? props?.item?.course?.published : false
+  );
 
   return (
     <div>
@@ -79,13 +89,21 @@ const CreateEditCourse = (props) => {
             variant="outlined"
             fullWidth
             onClick={() => {
-              props.updateCourse({
-                title,
-                description,
-                price,
-                imageLink: image,
-                published: checked,
-              });
+              props.type === "Create"
+                ? props.createCourse({
+                    title,
+                    description,
+                    price,
+                    imageLink: image,
+                    published: checked,
+                  })
+                : props.updateCourse({
+                    title,
+                    description,
+                    price,
+                    imageLink: image,
+                    published: checked,
+                  });
               setChecked(false);
               setDescription("");
               setPrice(0);
@@ -93,7 +111,7 @@ const CreateEditCourse = (props) => {
               setTitle("");
             }}
           >
-            Create
+            {props.type}
           </Button>
           <Button
             variant="outlined"
